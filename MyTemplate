@@ -10,6 +10,9 @@ typedef vector<ll> vll;
 #define pb push_back
 #define all(x) (x).begin(), (x).end()
 #define sz(x) (int)(x).size()
+#define MIN(a) *min_element(a.begin(),a.end());
+#define MAX(a) *max_element(a.begin(),a.end());
+#define SUM(a) accumulate(a.begin(),a.end());
 
 #define F first
 #define S second
@@ -51,10 +54,11 @@ ll lcm(ll a, ll b) {
 }
 
 // Solve function
-void solve() {
-    // Write your solution here
+void Ayush() {
+   
 }
 
+ 
 int main() {
     fast_io;
 #ifdef LOCAL
@@ -62,9 +66,9 @@ int main() {
     freopen("output.txt", "w", stdout);
 #endif
     int t = 1;
-    cin >> t; // Uncomment if multiple test cases
+    // cin >> t; // Uncomment if multiple test cases
     while (t--) {
-        solve();
+        Ayush();
     }
     return 0;
 }
