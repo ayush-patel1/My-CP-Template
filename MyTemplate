@@ -1,38 +1,32 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Shortcuts for common data types and functions
-typedef long long ll;
-typedef pair<int, int> pii;
-typedef vector<int> vi;
-typedef vector<ll> vll;
+using ll = long long;
+using pii = pair<int, int>;
+using vi = vector<int>;
+using vll = vector<ll>;
 
 #define pb push_back
 #define all(x) (x).begin(), (x).end()
-#define sz(x) (int)(x).size()
-#define MIN(a) *min_element(a.begin(),a.end());
-#define MAX(a) *max_element(a.begin(),a.end());
-#define SUM(a) accumulate(a.begin(),a.end());
+#define sz(x) static_cast<int>((x).size())
+
+#define MIN(a) *min_element((a).begin(), (a).end())
+#define MAX(a) *max_element((a).begin(), (a).end())
+#define SUM(a) accumulate((a).begin(), (a).end(), 0LL)
 
 #define F first
 #define S second
 #define fast_io ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 
-// Debugging macros
 #ifdef LOCAL
 #define debug(x) cerr << #x << " = " << (x) << endl;
 #else
 #define debug(x)
 #endif
 
-// Constants
 const int MOD = 1e9 + 7;
 const ll INF = 1e18;
 
-// Author
-// Written by Ayush
-
-// Function to perform modular exponentiation
 ll mod_exp(ll base, ll exp, ll mod) {
     ll result = 1;
     while (exp > 0) {
@@ -43,22 +37,18 @@ ll mod_exp(ll base, ll exp, ll mod) {
     return result;
 }
 
-// Function for GCD
 ll gcd(ll a, ll b) {
     return b == 0 ? a : gcd(b, a % b);
 }
 
-// Function for LCM
 ll lcm(ll a, ll b) {
     return (a / gcd(a, b)) * b;
 }
 
-// Solve function
-void Ayush() {
-   
+void solve() {
+  
 }
 
- 
 int main() {
     fast_io;
 #ifdef LOCAL
@@ -66,9 +56,10 @@ int main() {
     freopen("output.txt", "w", stdout);
 #endif
     int t = 1;
-    // cin >> t; // Uncomment if multiple test cases
+    // Uncomment for multiple test cases
+    // cin >> t; 
     while (t--) {
-        Ayush();
+        solve();
     }
     return 0;
 }
