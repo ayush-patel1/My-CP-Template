@@ -51,6 +51,19 @@ ll mod_exp(ll base, ll exp, ll mod) {
     return result;
 }
 
+vector<int> computeKMP(string &pat) {
+    int m = pat.size();
+    vector<int> lps(m + 1);
+    lps[0] = -1;
+    int i = 0, j = -1;
+
+    while (i < m) {
+        while (j != -1 && pat[i] != pat[j]) j = lps[j];
+        i++, j++;
+        lps[i] = j;
+    }
+    return lps;
+}
 
 
 ll gcd(ll a, ll b) {
