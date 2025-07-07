@@ -1,94 +1,95 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-using ll = long long;
-using pii = pair<int, int>;
-using vi = vector<int>;
-using vll = vector<ll>;
+// Types
+using ll = long long; using ull = unsigned long long; using ld = long double;
+using pii = pair<int,int>; using pll = pair<ll,ll>;
+using vi = vector<int>; using vll = vector<ll>;
+using vpii = vector<pii>; using vpll = vector<pll>;
 
+// Macros
 #define pb push_back
+#define eb emplace_back
+#define mp make_pair
 #define all(x) (x).begin(), (x).end()
+#define rall(x) (x).rbegin(), (x).rend()
 #define sz(x) static_cast<int>((x).size())
-
-#define MIN(a) *min_element((a).begin(), (a).end())
-#define MAX(a) *max_element((a).begin(), (a).end())
-#define SUM(a) accumulate((a).begin(), (a).end(), 0LL)
-
 #define F first
 #define S second
+
+// Common ops
+#define MIN(a) *min_element(all(a))
+#define MAX(a) *max_element(all(a))
+#define SUM(a) accumulate(all(a), 0LL)
+#define COUNT(a,x) count(all(a), x)
+#define UNIQUE(a) sort(all(a)), (a).erase(unique(all(a)), (a).end())
+
+// Loops
+#define rep(i,a,b) for (int i = (a); i <= (b); ++i)
+#define per(i,a,b) for (int i = (a); i >= (b); --i)
+#define each(x,a) for (auto &x : a)
+
+// IO
 #define fast_io ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 
+// Debug
 #ifdef LOCAL
 #define debug(x) cerr << #x << " = " << (x) << endl;
 #else
 #define debug(x)
 #endif
 
-const int mod= 1e9 + 7;
-const ll INF = 1e18;
+// Constants
+const int INF_INT = 1e9;
+const ll INF_LL = 1e18;
+const int mod = 1e9 + 7;
+const int MOD = 998244353;
+const double EPS = 1e-9;
+const double PI = acos(-1.0);
 
-ll binaryexpo(ll base,ll x){
-  ll ans=1;
-  while(x>0){
-    if(x&1){
-      ans=(ans*base)%mod;
-      x=x-1;
-    }else{
-      base=(base*base)%mod;
-      x=x/2;
-    }
+// Math
+ll gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
+ll lcm(ll a, ll b) { return a / gcd(a,b) * b; }
+ll mod_exp(ll base, ll exp, ll m) { ll res = 1; while (exp) { if (exp & 1) res = res * base % m; base = base * base % m; exp >>= 1; } return res; }
+ll mod_inv(ll a) { return mod_exp(a, mod - 2, mod); }
+
+// Binary search helper
+template <typename T> int uppr_bound(vector<T>& a, T x) {
+  int l = 0, r = sz(a) - 1, res = -1;
+  while (l <= r) {
+    int m = l + (r - l) / 2;
+    if (a[m] <= x) res = m, l = m + 1; else r = m - 1;
   }
-  return ans;
+  return res;
 }
 
-ll mod_exp(ll base, ll exp, ll mod) {
-    ll result = 1;
-    while (exp > 0) {
-        if (exp % 2 == 1) result = (result * base) % mod;
-        base = (base * base) % mod;
-        exp /= 2;
-    }
-    return result;
-}
-
-vector<int> computeKMP(string &pat) {
-    int m = pat.size();
-    vector<int> lps(m + 1);
-    lps[0] = -1;
-    int i = 0, j = -1;
-
-    while (i < m) {
-        while (j != -1 && pat[i] != pat[j]) j = lps[j];
-        i++, j++;
-        lps[i] = j;
-    }
-    return lps;
-}
-
-
-ll gcd(ll a, ll b) {
-    return b == 0 ? a : gcd(b, a % b);
-}
-
-ll lcm(ll a, ll b) {
-    return (a / gcd(a, b)) * b;
-}
+// DSU (Disjoint Set Union)
+struct DSU {
+  vi parent, size;
+  DSU(int n) { parent.resize(n+1); size.assign(n+1, 1); iota(all(parent), 0); }
+  int find(int x) { return parent[x] = (parent[x] == x ? x : find(parent[x])); }
+  bool unite(int x, int y) {
+    x = find(x); y = find(y);
+    if (x == y) return false;
+    if (size[x] < size[y]) swap(x, y);
+    parent[y] = x;
+    size[x] += size[y];
+    return true;
+  }
+};
 
 void solve() {
   
 }
 
 int main() {
-    fast_io;
+  fast_io;
 #ifdef LOCAL
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
+  freopen("input.txt", "r", stdin);
+  freopen("output.txt", "w", stdout);
 #endif
-    int t = 1;
-    //comment for single test case
-    cin >> t; 
-    while (t--) {
-        solve();
-    }
-    return 0;
+  int t = 1; cin >> t;
+  while (t--) solve();
+  return 0;
 }
+
