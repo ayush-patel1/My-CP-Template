@@ -1,95 +1,87 @@
 #include <bits/stdc++.h>
+#include<ext/pb_ds/assoc_container.hpp>
+#include<ext/pb_ds/tree_policy.hpp>
 using namespace std;
+using namespace __gnu_pbds;
 
-// Types
 using ll = long long; using ull = unsigned long long; using ld = long double;
-using pii = pair<int,int>; using pll = pair<ll,ll>;
-using vi = vector<int>; using vll = vector<ll>;
-using vpii = vector<pii>; using vpll = vector<pll>;
+using pii = pair<int, int>; using pll = pair<ll, ll>; using vi = vector<int>; using vll = vector<ll>;
 
-// Macros
+template<typename T>
+using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+#define key_order(s, val) ((s).order_of_key(val))  //find no. of x<val
+#define find_by_idx(s, idx) (*(s).find_by_order(idx))  // find val at idx
+
 #define pb push_back
 #define eb emplace_back
-#define mp make_pair
+#define ff first
+#define ss second
 #define all(x) (x).begin(), (x).end()
 #define rall(x) (x).rbegin(), (x).rend()
-#define sz(x) static_cast<int>((x).size())
-#define F first
-#define S second
+#define sz(x) int((x).size())
+#define endl '\n'
+#define nline '\n'
+#define fast_io ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 
-// Common ops
 #define MIN(a) *min_element(all(a))
 #define MAX(a) *max_element(all(a))
 #define SUM(a) accumulate(all(a), 0LL)
-#define COUNT(a,x) count(all(a), x)
-#define UNIQUE(a) sort(all(a)), (a).erase(unique(all(a)), (a).end())
+#define SORT(x) sort(all(x))
+#define RSORT(x) sort(rall(x))
+#define UNIQUE(v) sort(all(v)), v.erase(unique(all(v)), v.end())
 
-// Loops
-#define rep(i,a,b) for (int i = (a); i <= (b); ++i)
-#define per(i,a,b) for (int i = (a); i >= (b); --i)
-#define each(x,a) for (auto &x : a)
-
-// IO
-#define fast_io ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-
-// Debug
 #ifdef LOCAL
 #define debug(x) cerr << #x << " = " << (x) << endl;
 #else
 #define debug(x)
 #endif
 
-// Constants
-const int INF_INT = 1e9;
-const ll INF_LL = 1e18;
 const int mod = 1e9 + 7;
-const int MOD = 998244353;
-const double EPS = 1e-9;
-const double PI = acos(-1.0);
+const ll INF = 1e18;
+const ld EPS = 1e-9;
+const int dx[4] = {0, 1, 0, -1}, dy[4] = {1, 0, -1, 0};
 
-// Math
-ll gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
-ll lcm(ll a, ll b) { return a / gcd(a,b) * b; }
-ll mod_exp(ll base, ll exp, ll m) { ll res = 1; while (exp) { if (exp & 1) res = res * base % m; base = base * base % m; exp >>= 1; } return res; }
-ll mod_inv(ll a) { return mod_exp(a, mod - 2, mod); }
-
-// Binary search helper
-template <typename T> int uppr_bound(vector<T>& a, T x) {
-  int l = 0, r = sz(a) - 1, res = -1;
-  while (l <= r) {
-    int m = l + (r - l) / 2;
-    if (a[m] <= x) res = m, l = m + 1; else r = m - 1;
-  }
-  return res;
-}
-
-// DSU (Disjoint Set Union)
-struct DSU {
-  vi parent, size;
-  DSU(int n) { parent.resize(n+1); size.assign(n+1, 1); iota(all(parent), 0); }
-  int find(int x) { return parent[x] = (parent[x] == x ? x : find(parent[x])); }
-  bool unite(int x, int y) {
-    x = find(x); y = find(y);
-    if (x == y) return false;
-    if (size[x] < size[y]) swap(x, y);
-    parent[y] = x;
-    size[x] += size[y];
-    return true;
-  }
+class DisjointSet {
+    vector<int> rank, parent, size;
+public:
+    DisjointSet(int n) { rank.resize(n+1); parent.resize(n+1); size.assign(n+1,1); iota(all(parent),0); }
+    int findUPar(int node) { return node == parent[node] ? node : parent[node] = findUPar(parent[node]); }
+    void unionBySize(int u, int v) {
+        int pu = findUPar(u), pv = findUPar(v);
+        if (pu == pv) return;
+        if (size[pu] < size[pv]) parent[pu] = pv, size[pv] += size[pu];
+        else parent[pv] = pu, size[pu] += size[pv];
+    }
 };
+
+ll binaryexpo(ll base, ll x) { ll ans=1; while(x) { if(x&1) ans=(ans*base)%mod; base=(base*base)%mod; x>>=1; } return ans; }
+ll mod_exp(ll base, ll exp, ll mod) { ll res=1; while(exp) { if(exp&1) res=(res*base)%mod; base=(base*base)%mod; exp>>=1; } return res; }
+ll gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
+ll lcm(ll a, ll b) { return (a / gcd(a, b)) * b; }
+ll mod_inv(ll a, ll m) { return mod_exp(a, m - 2, m); }
+
+template<typename T> void read(vector<T> &a) { for (auto &x : a) cin >> x; }
+template<typename T> void print(vector<T> &a) { for (auto &x : a) cout << x << ' '; cout << endl; }
+template<typename T> bool in_range(T x, T l, T r) { return x >= l && x <= r; }
+template<typename T> void chmax(T &a, T b) { a = max(a, b); }
+template<typename T> void chmin(T &a, T b) { a = min(a, b); }
 
 void solve() {
   
 }
 
 int main() {
-  fast_io;
+    fast_io;
 #ifdef LOCAL
-  freopen("input.txt", "r", stdin);
-  freopen("output.txt", "w", stdout);
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
 #endif
-  int t = 1; cin >> t;
-  while (t--) solve();
-  return 0;
+    int t = 1;
+    //comment for single test case
+    cin >> t; 
+    while (t--) {
+        solve();
+    }
+    return 0;
 }
 
